@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>پنجره ملی خدمات دولت هوشمند - ورود یکپارچه</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --shade-600: #3f619d;
+    --shade-700: #2f4d82;
+    --text: #223557;
+    --muted: #85888b;
+    --border: #c2c4c5;
+    --bg: #f5f7fb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .card {
+    width: 100%;
+    max-width: 420px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(63,97,157,0.12);
+    overflow: hidden;
+  }
+  .header {
+    background: linear-gradient(135deg, var(--shade-600), var(--shade-700));
+    color: #fff;
+    padding: 1.75rem 1.5rem 1.25rem;
+    text-align: center;
+  }
+  .header h1 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+  .header p {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    line-height: 1.6;
+  }
+  .body {
+    padding: 1.75rem 1.5rem 2rem;
+  }
+  .tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    background: #f0f3f9;
+    border-radius: 12px;
+    padding: 4px;
+  }
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: 0.6rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .tab.active {
+    background: #fff;
+    color: var(--shade-600);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .field {
+    margin-bottom: 1.25rem;
+  }
+  .field label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--text);
+  }
+  .field input {
+    width: 100%;
+    height: 48px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 0 1rem;
+    font-size: 1rem;
+    font-family: inherit;
+    direction: ltr;
+    text-align: left;
+    transition: border-color 0.2s;
+  }
+  .field input:focus {
+    outline: none;
+    border-color: var(--shade-600);
+  }
+  .field input::placeholder {
+    color: #b0b4b8;
+  }
+  .btn {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 12px;
+    background: var(--shade-600);
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 0.5rem;
+  }
+  .btn:hover { background: var(--shade-700); }
+  .btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.25rem;
+    font-size: 0.85rem;
+  }
+  .links a {
+    color: var(--shade-600);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .footer-note {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .otp-row {
+    display: none;
+    gap: 0.6rem;
+    justify-content: center;
+    direction: ltr;
+    margin: 1rem 0;
+  }
+  .otp-row.show { display: flex; }
+  .otp-row input {
+    width: 48px;
+    height: 52px;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+  }
+  .otp-row input:focus {
+    outline: none;
+    border-color: var(--shade-600);
+  }
+  .hint {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 0.75rem;
+  }
+  @media (max-width: 480px) {
+    .header h1 { font-size: 1.2rem; }
+    .body { padding: 1.4rem 1.2rem 1.75rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <h1>پنجره ملی خدمات دولت هوشمند</h1>
+      <p>ورود یکپارچه به خدمات دولتی و عمومی</p>
+    </div>
+
+    <div class="body">
+      <div class="tabs">
+        <div class="tab active" data-tab="mobile">شماره موبایل</div>
+        <div class="tab" data-tab="national">کد ملی</div>
+      </div>
+
+      <form id="login-form" onsubmit="return handleSubmit(event)">
+        <div class="field" id="mobile-field">
+          <label for="mobile">شماره موبایل</label>
+          <input type="tel" id="mobile" inputmode="numeric" placeholder="0912xxxxxxx" maxlength="11" autocomplete="tel">
+        </div>
+
+        <div class="field" id="national-field" style="display:none">
+          <label for="national">کد ملی</label>
+          <input type="text" id="national" inputmode="numeric" placeholder="کد ملی ۱۰ رقمی" maxlength="10" autocomplete="off">
+        </div>
+
+        <div class="otp-row" id="otp-row">
+          <input maxlength="1" inputmode="numeric">
+          <input maxlength="1" inputmode="numeric">
+          <input maxlength="1" inputmode="numeric">
+          <input maxlength="1" inputmode="numeric">
+          <input maxlength="1" inputmode="numeric">
+          <input maxlength="1" inputmode="numeric">
+        </div>
+
+        <button type="submit" class="btn" id="submit-btn">دریافت کد تأیید</button>
+
+        <p class="hint" id="hint">کد تأیید به شماره موبایل شما ارسال می‌شود</p>
+
+        <div class="links">
+          <a href="#">راهنما</a>
+          <a href="#">پشتیبانی</a>
+        </div>
+
+        <p class="footer-note">
+          با ورود، به شرایط استفاده از پنجره ملی خدمات دولت هوشمند موافقت می‌کنید.
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const mobileField = document.getElementById('mobile-field');
+    const nationalField = document.getElementById('national-field');
+    const otpRow = document.getElementById('otp-row');
+    const submitBtn = document.getElementById('submit-btn');
+    const hint = document.getElementById('hint');
+    let step = 'request'; // request | verify
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        if (tab.dataset.tab === 'mobile') {
+          mobileField.style.display = 'block';
+          nationalField.style.display = 'none';
+        } else {
+          mobileField.style.display = 'none';
+          nationalField.style.display = 'block';
+        }
+      });
+    });
+
+    // OTP auto-focus
+    const otpInputs = otpRow.querySelectorAll('input');
+    otpInputs.forEach((inp, i) => {
+      inp.addEventListener('input', () => {
+        if (inp.value && i < otpInputs.length - 1) otpInputs[i + 1].focus();
+      });
+      inp.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !inp.value && i > 0) otpInputs[i - 1].focus();
+      });
+    });
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      if (step === 'request') {
+        // Simulate sending OTP
+        otpRow.classList.add('show');
+        submitBtn.textContent = 'تأیید و ورود';
+        hint.textContent = 'کد ۶ رقمی ارسال‌شده را وارد کنید';
+        step = 'verify';
+        otpInputs[0].focus();
+      } else {
+        // Simulate success → redirect to the declaration form
+        window.location.href = 'خوداظهاری-افزایش-کالابرگ.html';
+      }
+      return false;
+    }
+  </script>
+</body>
+</html>
